@@ -6,19 +6,19 @@ build-backend = "setuptools.build_meta"
 name = "tennis_booking"
 version = "0.1.0"
 description = "A tennis court booking assistant with natural language processing"
-requires-python = ">=3.10,<3.12"
+requires-python = ">=3.10"
 dependencies = [
-    "streamlit==1.32.0",
-    "langchain==0.0.350",
-    "langchain-core==0.1.22",
-    "langchain-community==0.0.10",
-    "langchain-openai==0.0.2.post1",
-    "openai==1.6.1",
-    "python-dotenv==1.0.1",
-    "pydantic==1.10.13",
-    "dateparser==1.2.0",
+    "streamlit>=1.32.0",
+    "langchain>=0.1.0",
+    "langchain-core>=0.1.22",
+    "langchain-community>=0.0.10",
+    "langchain-openai>=0.0.2.post1",
+    "openai>=1.6.1",
+    "python-dotenv>=1.0.1",
+    "pydantic>=2.0.0",
+    "dateparser>=1.2.0",
     "typing-inspect>=0.9.0",
-    "typing_extensions>=4.5.0"
+    "typing_extensions>=4.7.0"
 ]
 
 [tool.setuptools.packages.find]
