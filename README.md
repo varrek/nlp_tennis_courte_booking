@@ -19,10 +19,10 @@ A Python-based tennis court booking application that uses natural language proce
 
 ## Prerequisites
 
-- Python 3.8 or higher
+- Python 3.10 or higher
 - OpenAI API key
 
-## Installation
+## Local Development
 
 1. Clone the repository:
 ```bash
@@ -40,35 +40,51 @@ pip install -r requirements.txt
 OPENAI_API_KEY=your-api-key-here
 ```
 
-## Usage
-
-1. Start the application:
+4. Run the application:
 ```bash
-streamlit run app.py
+streamlit run run_app.py
 ```
 
-2. Enter your booking request in natural language. Examples:
-   - "Need a clay court for next Tuesday at 7pm"
-   - "Looking for a doubles match tomorrow morning at 9am"
-   - "Want to practice with a ball machine for 90 minutes"
+## Deployment to Streamlit Cloud
 
-3. The application will extract and display:
-   - Core booking details (date, time, location, duration)
-   - Court specifications (surface type, indoor/outdoor, lighting)
-   - Match details (singles/doubles, number of players, skill level)
-   - Equipment and amenities (rentals, ball machine, coaching)
-   - Environmental preferences (weather, temperature)
-   - Additional requirements (seating, refreshments)
+1. Fork this repository to your GitHub account.
 
-4. Review the details and confirm your booking
+2. Go to [Streamlit Cloud](https://streamlit.io/cloud) and sign in with your GitHub account.
+
+3. Click "New app" and select this repository.
+
+4. Set the following:
+   - Main file path: `run_app.py`
+   - Python version: 3.10
+
+5. Add your OpenAI API key as a secret:
+   - In the app settings, go to "Secrets"
+   - Add your API key in the following format:
+     ```toml
+     OPENAI_API_KEY="your-api-key-here"
+     ```
+
+6. Deploy!
 
 ## Project Structure
 
-- `app.py`: Main Streamlit application
-- `booking_parser.py`: LangChain integration and booking request parser
-- `models.py`: Data models and enums
-- `requirements.txt`: Project dependencies
-- `.env`: Environment variables (not included in repository)
+```
+├── .streamlit/
+│   └── config.toml      # Streamlit configuration
+├── src/
+│   └── tennis_booking/
+│       ├── __init__.py
+│       ├── app.py       # Main Streamlit application
+│       ├── booking_parser.py  # LangChain integration
+│       └── models.py    # Data models and enums
+├── .env                 # Environment variables (local development)
+├── .gitignore
+├── LICENSE
+├── README.md
+├── requirements.txt
+├── run_app.py          # Application entry point
+└── setup.py            # Package configuration
+```
 
 ## Development
 

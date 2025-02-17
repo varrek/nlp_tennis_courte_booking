@@ -2,12 +2,8 @@ import os
 import streamlit as st
 from dotenv import load_dotenv
 
-try:
-    from booking_parser import BookingParser
-    from models import BookingDetails
-except ImportError:
-    from .booking_parser import BookingParser
-    from .models import BookingDetails
+from .booking_parser import BookingParser
+from .models import BookingDetails
 
 # Load environment variables
 load_dotenv()

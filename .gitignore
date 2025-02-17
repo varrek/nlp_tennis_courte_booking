@@ -1,6 +1,7 @@
 # Environment variables
 .env
 .env.*
+.streamlit/secrets.toml
 
 # Python
 __pycache__/
@@ -44,7 +45,7 @@ ENV/
 .env.production.local
 
 # Streamlit
-.streamlit/
+.streamlit/secrets.toml
 
 # Logs
 *.log
