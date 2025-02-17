@@ -18,7 +18,7 @@ setup(
         "typing-inspect>=0.9.0",
         "typing_extensions>=4.5.0"
     ],
-    python_requires=">=3.11,<3.12",
+    python_requires=">=3.10,<3.12",
     description="A tennis court booking assistant with natural language processing",
     author="varrek",
     author_email="",

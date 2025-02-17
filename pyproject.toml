@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "tennis_booking"
 version = "0.1.0"
 description = "A tennis court booking assistant with natural language processing"
-requires-python = ">=3.11,<3.12"
+requires-python = ">=3.10,<3.12"
 dependencies = [
     "streamlit==1.32.0",
     "langchain==0.0.350",

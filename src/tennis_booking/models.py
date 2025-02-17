@@ -72,22 +72,22 @@ class BookingDetails(BaseModel):
                 "Duration": f"{self.duration_minutes} minutes"
             },
             "Court Specifications": {
-                "Court Type": self.court_type.value if self.court_type else "Not specified",
-                "Indoor/Outdoor": self.court_location.value if self.court_location else "Not specified",
+                "Court Type": self.court_type.value if isinstance(self.court_type, CourtType) else str(self.court_type) if self.court_type else "Not specified",
+                "Indoor/Outdoor": self.court_location.value if isinstance(self.court_location, CourtLocation) else str(self.court_location) if self.court_location else "Not specified",
                 "Lighting Required": "Yes" if self.lighting_required else "No" if self.lighting_required is False else "Not specified"
             },
             "Match Details": {
-                "Match Type": self.match_type.value if self.match_type else "Not specified",
+                "Match Type": self.match_type.value if isinstance(self.match_type, MatchType) else str(self.match_type) if self.match_type else "Not specified",
                 "Number of Players": str(self.number_of_players) if self.number_of_players else "Not specified",
-                "Skill Level": self.skill_level.value if self.skill_level else "Not specified"
+                "Skill Level": self.skill_level.value if isinstance(self.skill_level, SkillLevel) else str(self.skill_level) if self.skill_level else "Not specified"
             },
             "Equipment & Amenities": {
-                "Equipment Rental": ", ".join([e.value for e in self.equipment_rental]) if self.equipment_rental else "None",
+                "Equipment Rental": ", ".join(e.value if isinstance(e, Equipment) else str(e) for e in self.equipment_rental) if self.equipment_rental else "None",
                 "Ball Machine": "Yes" if self.ball_machine_required else "No" if self.ball_machine_required is False else "Not specified",
                 "Coaching": "Yes" if self.coaching_requested else "No" if self.coaching_requested is False else "Not specified"
             },
             "Environmental Preferences": {
-                "Weather": self.weather_preference.value if self.weather_preference else "Not specified",
+                "Weather": self.weather_preference.value if isinstance(self.weather_preference, WeatherPreference) else str(self.weather_preference) if self.weather_preference else "Not specified",
                 "Temperature": self.temperature_preference if self.temperature_preference else "Not specified"
             },
             "Additional Requirements": {

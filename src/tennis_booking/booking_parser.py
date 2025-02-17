@@ -82,6 +82,51 @@ class BookingParser:
             if not response_dict.get('location'):
                 response_dict['location'] = "Main Tennis Center"
             
+            # Handle enum values that might be returned as schema
+            if isinstance(response_dict.get('court_location'), dict) and 'enum' in response_dict['court_location']:
+                response_dict['court_location'] = None
+            
+            if isinstance(response_dict.get('weather_preference'), dict) and 'enum' in response_dict['weather_preference']:
+                response_dict['weather_preference'] = None
+            
+            # Convert string values to enum objects
+            if isinstance(response_dict.get('court_type'), str):
+                try:
+                    response_dict['court_type'] = CourtType(response_dict['court_type'].lower())
+                except ValueError:
+                    response_dict['court_type'] = None
+                    
+            if isinstance(response_dict.get('court_location'), str):
+                try:
+                    response_dict['court_location'] = CourtLocation(response_dict['court_location'].lower())
+                except ValueError:
+                    response_dict['court_location'] = None
+                    
+            if isinstance(response_dict.get('match_type'), str):
+                try:
+                    response_dict['match_type'] = MatchType(response_dict['match_type'].lower())
+                except ValueError:
+                    response_dict['match_type'] = None
+                    
+            if isinstance(response_dict.get('skill_level'), str):
+                try:
+                    response_dict['skill_level'] = SkillLevel(response_dict['skill_level'].lower())
+                except ValueError:
+                    response_dict['skill_level'] = None
+                    
+            if isinstance(response_dict.get('weather_preference'), str):
+                try:
+                    response_dict['weather_preference'] = WeatherPreference(response_dict['weather_preference'].lower())
+                except ValueError:
+                    response_dict['weather_preference'] = None
+                    
+            # Handle equipment rental list
+            if isinstance(response_dict.get('equipment_rental'), list):
+                try:
+                    response_dict['equipment_rental'] = [Equipment(item.lower()) for item in response_dict['equipment_rental']]
+                except ValueError:
+                    response_dict['equipment_rental'] = None
+            
             # Parse the date_time string into a datetime object
             if isinstance(response_dict.get('date_time'), str):
                 date_str = response_dict['date_time'].lower()
