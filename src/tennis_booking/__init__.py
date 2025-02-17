@@ -2,4 +2,8 @@
 
 from tennis_booking.app import main
 
-__all__ = ['main'] 
+__all__ = ['main']
+
+"""
+Tennis Booking package initialization.
+""" 
