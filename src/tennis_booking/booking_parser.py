@@ -3,7 +3,7 @@ import json
 from typing import Optional, Dict, Any
 
 import dateparser
-from langchain_openai import ChatOpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain.output_parsers import PydanticOutputParser
 
@@ -46,9 +46,9 @@ Booking request: {booking_request}
 class BookingParser:
     def __init__(self, openai_api_key: str):
         self.llm = ChatOpenAI(
-            model="gpt-3.5-turbo-0125",
+            model_name="gpt-3.5-turbo",
             temperature=0,
-            api_key=openai_api_key
+            openai_api_key=openai_api_key
         )
         self.parser = PydanticOutputParser(pydantic_object=BookingDetails)
         self.prompt = ChatPromptTemplate.from_template(
@@ -71,7 +71,7 @@ class BookingParser:
                 format_instructions=self.parser.get_format_instructions()
             )
             
-            llm_response = self.llm.invoke(messages)
+            llm_response = self.llm(messages)
             response_content = llm_response.content
             print(f"LLM Response: {response_content}")  # Debug print
             
