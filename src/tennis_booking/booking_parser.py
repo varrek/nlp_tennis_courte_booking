@@ -3,7 +3,7 @@ import json
 from typing import Optional, Dict, Any
 
 import dateparser
-from langchain_community.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain.output_parsers import PydanticOutputParser
 
@@ -14,7 +14,7 @@ You are a tennis court booking assistant. Parse the following booking request an
 If a detail is not mentioned, leave it as null, except for location which should default to "Main Tennis Center" if not specified.
 
 For the date and time, you MUST return them in one of these exact formats:
-1. For relative dates: "tomorrow at HH:MM" or "today at HH:MM" or "next tuesday at HH:MM"
+1. For relative dates: "YYYY-MM-DD HH:MM" (convert relative dates to absolute dates)
 2. For specific dates: "YYYY-MM-DD HH:MM"
 
 Always use 24-hour format for time (00-23). For example:
@@ -24,9 +24,9 @@ Always use 24-hour format for time (00-23). For example:
 - "midnight" should be "00:00"
 
 Examples of correct date_time formats:
-- "Need a court tomorrow at 7pm" → "tomorrow at 19:00"
-- "Book for next Tuesday evening" → "next tuesday at 19:00"
-- "Want to play at 9am" → "today at 09:00"
+- "Need a court tomorrow at 7pm" → "2024-03-20 19:00" (if today is March 19, 2024)
+- "Book for next Tuesday evening" → "2024-03-26 19:00"
+- "Want to play at 9am" → "2024-03-19 09:00"
 - "Book for March 25th at 3pm" → "2024-03-25 15:00"
 
 Please pay special attention to the following aspects:
@@ -46,7 +46,7 @@ Booking request: {booking_request}
 class BookingParser:
     def __init__(self, openai_api_key: str):
         self.llm = ChatOpenAI(
-            model_name="gpt-3.5-turbo",
+            model="gpt-3.5-turbo",
             temperature=0,
             openai_api_key=openai_api_key
         )
@@ -71,7 +71,7 @@ class BookingParser:
                 format_instructions=self.parser.get_format_instructions()
             )
             
-            llm_response = self.llm(messages)
+            llm_response = self.llm.invoke(messages)
             response_content = llm_response.content
             print(f"LLM Response: {response_content}")  # Debug print
             
@@ -100,31 +100,9 @@ class BookingParser:
                 )
                 
                 if not parsed_datetime:
-                    # If dateparser fails, try manual parsing for common formats
-                    if "today at " in date_str:
-                        time_str = date_str.split("at ")[1].strip()
-                        parsed_datetime = datetime.combine(
-                            datetime.now().date(),
-                            datetime.strptime(time_str, "%H:%M").time()
-                        )
-                    elif "tomorrow at " in date_str:
-                        time_str = date_str.split("at ")[1].strip()
-                        parsed_datetime = datetime.combine(
-                            datetime.now().date(),
-                            datetime.strptime(time_str, "%H:%M").time()
-                        )
-                        parsed_datetime = parsed_datetime.replace(day=parsed_datetime.day + 1)
-                    else:
-                        # Try exact format as last resort
-                        try:
-                            parsed_datetime = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
-                        except ValueError:
-                            raise ValueError(f"Could not parse date/time: {date_str}")
-                
-                if parsed_datetime:
-                    response_dict['date_time'] = parsed_datetime
-                else:
                     raise ValueError(f"Could not parse date/time: {date_str}")
+                
+                response_dict['date_time'] = parsed_datetime
             
             # Create BookingDetails object
             booking_details = BookingDetails(**response_dict)

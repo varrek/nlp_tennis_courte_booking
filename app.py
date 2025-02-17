@@ -2,8 +2,8 @@ import os
 import streamlit as st
 from dotenv import load_dotenv
 
-from src.tennis_booking.booking_parser import BookingParser
-from src.tennis_booking.models import BookingDetails
+from tennis_booking.booking_parser import BookingParser
+from tennis_booking.models import BookingDetails
 
 # Load environment variables
 load_dotenv()
