@@ -7,7 +7,8 @@ setup(
     package_dir={"": "src"},
     install_requires=[
         "streamlit==1.32.0",
-        "langchain==0.0.350",
+        "langchain==0.1.0",
+        "langchain-community==0.0.10",
         "openai==1.6.1",
         "python-dotenv==1.0.1",
         "pydantic==1.10.13",
