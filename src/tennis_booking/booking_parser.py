@@ -7,7 +7,7 @@ from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain.output_parsers import PydanticOutputParser
 
-from models import BookingDetails, CourtType, CourtLocation, MatchType, SkillLevel, Equipment, WeatherPreference
+from src.tennis_booking.models import BookingDetails, CourtType, CourtLocation, MatchType, SkillLevel, Equipment, WeatherPreference
 
 BOOKING_PROMPT = """
 You are a tennis court booking assistant. Parse the following booking request and extract all relevant details.
