@@ -15,8 +15,13 @@ setup(
         "python-dotenv==1.0.1",
         "pydantic==1.10.13",
         "dateparser==1.2.0",
-        "typing-inspect>=0.9.0",
-        "typing_extensions>=4.5.0"
+        "typing-inspect==0.9.0",
+        "typing_extensions>=4.7.0,<5.0.0",
+        "pandas>=1.3.0",
+        "plotly>=5.0.0",
+        "yfinance>=0.2.0",
+        "pandas-datareader>=0.10.0",
+        "prophet>=1.1.0"
     ],
     python_requires=">=3.10,<3.12",
     description="A tennis court booking assistant with natural language processing",
