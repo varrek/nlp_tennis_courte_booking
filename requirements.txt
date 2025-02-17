@@ -1,4 +1,4 @@
-streamlit==1.32.0
+streamlit
 langchain==0.1.0
 langchain-community==0.0.10
 openai==1.6.1
@@ -11,5 +11,9 @@ pandas
 plotly
 streamlit
 yfinance
+pandas-datareader
+prophet
+pandas
+plotly
 pandas-datareader
 prophet
